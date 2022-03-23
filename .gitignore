@@ -1,0 +1,12 @@
+.idea/
+
+env/
+build/
+venv/
+.venv
+.Python
+*.sql
+*.zip
+*.log
+result/
+result.txt
