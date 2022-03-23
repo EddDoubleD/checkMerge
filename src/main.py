@@ -37,8 +37,8 @@ except KeyError:
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    log.debug("--------- desc analysis start ---------")
-    if argv.__len__() < 3:
+    log.debug("--------- check merge request ---------")
+    if argv.__len__() < 4:
         log.error("not enough parameters")
         exit(1)
     # get argument's
