@@ -10,7 +10,10 @@ This script is designed to parse merge requests in gitlab <br/>
 * Generate a token as [instructed](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) 
 * Run script
 <br/>
-`- python /code/main.py $GL_URL $TOKEN $MERGE_ID`
+
+```python
+python /code/main.py $GL_URL $TOKEN $MERGE_ID
+```
 
 ## helpfulness
 [How to use pipenv](https://webdevblog.ru/pipenv-rukovodstvo-po-novomu-instrumentu-python/) 
