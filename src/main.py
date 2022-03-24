@@ -29,6 +29,7 @@ log = logging.getLogger(__name__)
 # settings init
 try:
     SETTING_CONFIG = path.join(path.dirname(path.abspath(__file__)), 'ini/settings.ini')
+    print(SETTING_CONFIG)
     config = configparser.ConfigParser()
     config.read(SETTING_CONFIG)
 except KeyError:
@@ -43,7 +44,7 @@ if __name__ == '__main__':
         exit(1)
     # get argument's
     script, url, token, projectId, mergeId = argv
-    regExp = config.get('regExp', 're')
+    regExp = ".*(\.java|pom.xml)" # regExp = config.get('regExp', 're')
     # init gitlab property and connect
     gl = gitlab.Gitlab(url=url, private_token=token)
     gl.auth()
