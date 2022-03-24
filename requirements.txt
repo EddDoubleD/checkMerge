@@ -1,4 +1,3 @@
-configparser
+configparser~=5.2.0
 #logging
-#shutil
-#tempfile
+python-gitlab~=3.2.0
