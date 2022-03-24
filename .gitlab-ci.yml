@@ -1,0 +1,41 @@
+variables:
+    PUBLIC_REGISTRY: cr-sk-prod.otr.ru:5005/registry/docker-images
+    TARGET_IMAGE: check-merge
+    TARGET_TAG: latest
+    PY_IMAGE: $PUBLIC_REGISTRY/python:3.8-slim-buster
+    DOCKER_IMAGE: $PUBLIC_REGISTRY/dind:19.03.14
+
+stages:
+  - build
+  - test
+
+build:
+  image: $DOCKER_IMAGE
+  stage: build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "feature-checkMerge"'
+  before_script:
+    - docker login -u "$SERVICE_USER" -p "$SERVICE_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -t $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG .
+    - docker push $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG
+  allow_failure: true
+
+test:
+  image: $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG
+  stage: test
+  variables:
+    URL: https://gl-sk-prod.otr.ru
+    TOKEN: V2djy2XiKMKGmUyDsLMi
+    PROJECT_ID: 114
+    MERGE_ID: 1935
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "feature-checkMerge"'
+  script:
+    - python /code/main.py $URL $TOKEN $PROJECT_ID $MERGE_ID
+    - if [ -e result.txt ] then echo "Файл существует." else echo "Файл не существует" fi
+  artifacts:
+    expire_in: 1h
+    paths:
+      - result.txt
+      - base.log
