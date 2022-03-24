@@ -1,5 +1,5 @@
 # установка базового образа (host OS)
-FROM cr-sk-prod.otr.ru:5005/registry/docker-images/python:3.8-slim-buster
+FROM python:3.8-slim-buster
 ENV TZ Europe/Moscow
 # установка рабочей директории в контейнере
 WORKDIR /code
