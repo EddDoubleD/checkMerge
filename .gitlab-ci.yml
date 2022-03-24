@@ -33,7 +33,7 @@ test:
     - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "feature-checkMerge"'
   script:
     - python /code/main.py $URL $TOKEN $PROJECT_ID $MERGE_ID
-    - if [ -e result.txt ] then echo "Файл существует." else echo "Файл не существует" fi
+    - if [ -e result.txt ]; then echo "Файл существует." else echo "Файл не существует" ; fi
   artifacts:
     expire_in: 1h
     paths:
