@@ -36,7 +36,11 @@ if __name__ == '__main__':
         log.error("not enough parameters")
         exit(1)
     # get argument's
-    script, url, token, projectId, mergeId, mr_url = argv
+    mr_url = None
+    if argv.__len__() == 6:
+        script, url, token, projectId, mergeId, mr_url = argv
+    else:
+        script, url, token, projectId, mergeId = argv
 
     regExp = ".*(\.java|pom.xml)"
     # Инициализируем регулярные выражения для отправки запроса на сервер студии
@@ -69,7 +73,7 @@ if __name__ == '__main__':
             find = True
 
     # Если файлы java или pom не найдены запишем N
-    if not find:
+    if not find and mr_url is not None:
         file.write("N")
         file.close()
 

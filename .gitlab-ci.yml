@@ -13,7 +13,7 @@ build:
   image: $DOCKER_IMAGE
   stage: build
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "checkMerge_v1.0"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "feature-checkMerge"'
   before_script:
     - docker login -u "$SERVICE_USER" -p "$SERVICE_PASSWORD" $CI_REGISTRY
   script:
