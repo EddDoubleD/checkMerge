@@ -10,3 +10,4 @@ venv/
 *.log
 result/
 result.txt
+src/data/check_merge.ini
