@@ -1,6 +1,6 @@
 variables:
     PUBLIC_REGISTRY: cr-sk-prod.otr.ru:5005/registry/docker-images
-    TARGET_IMAGE: check-merge
+    TARGET_IMAGE: check-merge-studio
     TARGET_TAG: latest
     PY_IMAGE: $PUBLIC_REGISTRY/python:3.8-slim-buster
     DOCKER_IMAGE: $PUBLIC_REGISTRY/dind:19.03.14
