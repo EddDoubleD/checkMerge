@@ -1,0 +1,21 @@
+variables:
+    PUBLIC_REGISTRY: cr-sk-prod.otr.ru:5005/registry/docker-images
+    TARGET_IMAGE: smoke-runner
+    TARGET_TAG: latest
+    PY_IMAGE: $PUBLIC_REGISTRY/python:3.8-slim-buster
+    DOCKER_IMAGE: $PUBLIC_REGISTRY/dind:19.03.14
+
+stages:
+  - build
+
+build:
+  image: $DOCKER_IMAGE
+  stage: build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  before_script:
+    - docker login -u "$SERVICE_USER" -p "$SERVICE_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -t $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG .
+    - docker push $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG
+  allow_failure: true
