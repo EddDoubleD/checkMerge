@@ -1,33 +1,25 @@
 import json
-from sys import argv
 import requests
-
+from os import path
 
 if __name__ == '__main__':
-    # url, token, ref, run_type, suite_name
-    if argv.__len__() != 6:
-        print('Incorrect number of parameters, smoke-test will not run')
-        exit(0)
-
-    script, url, token, ref, run_type, suite_name = argv
-
-    msg = ""
-    body = ""
     try:
-        payload = {
-            'token': token,  # токен триггера пайплайна
-            'ref': ref,
-            'variables[RUN_TYPE]': run_type,
-            'variables[SUITE_NAME]': suite_name
-        }
-        response = requests.post(url, data=payload)
+        with open(path.join(path.dirname(path.abspath(__file__)), 'data/settings.json')) as f:
+            config = json.load(f)
+    except IOError:
+        print('File read error')
+        exit(1)
+
+    try:
+        response = requests.post(config['url'], data=config['payload'])
         status = response.status_code
         if status == 201:
             msg = 'Smoke-test запущен'
             body = json.loads(response.content)
         else:
             msg = 'Ошибка выполнения'
-        print(msg + "\n" + body)
+            body = ''
+        print(msg + "\n" + str(body['web_url']))
     except requests.exceptions.HTTPError as httpError:
         print("Http Error:", httpError)
     except requests.exceptions.ConnectionError as connectionError:
