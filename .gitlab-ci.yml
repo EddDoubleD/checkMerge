@@ -14,7 +14,7 @@ build:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
   before_script:
-    - docker login -u "$SERVICE_USER" -p "$SERVICE_PASSWORD" $CI_REGISTRY
+    - docker login -u "$SERVICE_USER" -p "$SERVICE_PASSWORD" $PUBLIC_REGISTRY
   script:
     - docker build -t $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG .
     - docker push $PUBLIC_REGISTRY/$TARGET_IMAGE:$TARGET_TAG
